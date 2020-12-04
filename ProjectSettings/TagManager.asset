@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ghost
   - Obstacle
+  - ExitPoint
+  - EntrancePoint
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - 
   - Obstacle
   - Car
-  - 
+  - Checkpoint
   - 
   - 
   - 
@@ -42,6 +44,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Decals
+    uniqueID: 2525239339
     locked: 0
   - name: Obstacles
     uniqueID: 2300668831

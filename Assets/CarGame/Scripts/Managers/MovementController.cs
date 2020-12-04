@@ -39,23 +39,26 @@ public class MovementController : MonoBehaviour
 
     void Start()
     {
-        EventManager.AddListener<UIBaseInputButton, ButtonTriggerType>(InputButtonEvents.TURN_RIGHT_BUTTON, TriggerInput);
-        EventManager.AddListener<UIBaseInputButton, ButtonTriggerType>(InputButtonEvents.TURN_LEFT_BUTTON, TriggerInput);
+        string[] allButtonEventCodes = typeof(InputButtonEvents).GetConstantValues<string>().ToArray();
+        for (int i = 0; i < allButtonEventCodes.Length; ++i)
+            EventManager.AddListener<UIBaseInputButton, ButtonTriggerType>(allButtonEventCodes[i], TriggerInput);
         
         string[] allInputEventCodes = typeof(InputEvents).GetConstantValues<string>().ToArray();
-
         for (int i = 0; i < allInputEventCodes.Length; ++i)
             m_InputStatus.Add(allInputEventCodes[i], false);
         
-        EventManager.AddListener<int>(MissionEvents.WAVE_FINISHED, (num) => ResetStatus());
+        // EventManager.AddListener<int>(MissionEvents.WAVE_FINISHED, (num) => ResetStatus());
     }
-    
+
     void Update()
     {
-        foreach (KeyValuePair<string, bool> pair in m_InputStatus)
+        if (!Managers.MissionManager.IsPaused)
         {
-            if (pair.Value)
-                EventManager.NotifyEvent(pair.Key);
+            foreach (KeyValuePair<string, bool> pair in m_InputStatus)
+            {
+                if (pair.Value)
+                    EventManager.NotifyEvent(pair.Key);
+            }
         }
     }
 }

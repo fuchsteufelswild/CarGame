@@ -6,11 +6,14 @@ using System.Linq;
 public class ObjectManager : ManagerBase,
                              IGameManager
 {
-    [SerializeField] int m_InitialCarPoolSize = 5;
+    [SerializeField] int m_InitialCarPoolSize = 7;
     [SerializeField] GhostCar m_GhostCarPrefab;
 
     GameObjectPool<GhostCar> m_GhostCarPool;
-    
+
+    public GhostCar AvailableGhostCar =>
+        m_GhostCarPool.GetItem();
+
     ManagerStatus IGameManager.GetStatus() => base.GetStatus();
 
     bool IGameManager.IsReady() => base.IsReady();

@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/* Manager that is responsible for saving and 
+ * restoring game data. Can be used if save
+ * functionality is needed.
+ */ 
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
@@ -18,14 +23,14 @@ public class DataManager : ManagerBase,
 
     private void Awake()
     {
-        // EventMessenger.AddListener(SaveEvents.SAVE_GAME_STATE, SaveGameData);
-        // EventMessenger.AddListener(SaveEvents.GAME_RESET, DeleteSave);
+        EventManager.AddListener(SaveEvents.SAVE_GAME_STATE, SaveGameData);
+        EventManager.AddListener(SaveEvents.GAME_RESET, DeleteSave);
     }
 
     private void OnDestroy()
     {
-        // EventMessenger.RemoveListener(SaveEvents.SAVE_GAME_STATE, SaveGameData);
-        // EventMessenger.RemoveListener(SaveEvents.GAME_RESET, DeleteSave);
+        EventManager.RemoveListener(SaveEvents.SAVE_GAME_STATE, SaveGameData);
+        EventManager.RemoveListener(SaveEvents.GAME_RESET, DeleteSave);
     }
 
     void DeleteSave() =>

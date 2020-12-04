@@ -60,8 +60,12 @@ public class LevelEditorWindow : EditorWindow
     {
         if (m_LevelTemplate != null)
         {
-            GameObject level = Instantiate(m_LevelTemplate, Vector3.zero, Quaternion.identity).gameObject;
+            GameObject level = Instantiate(m_LevelTemplate, null).gameObject;
             level.name = "Level";
+
+            Undo.RecordObject(level, "Level Created");
+
+            EditorApplication.SaveScene();
         }
         else
             CreateDefaultLevel();
@@ -103,6 +107,10 @@ public class LevelEditorWindow : EditorWindow
         }
 
         level.AddEntranceExitPair();
+
+        Undo.RecordObject(level, "EntranceExitPair added");
+
+        EditorApplication.SaveScene();
     }
 
     void AddObstacle()
@@ -125,6 +133,9 @@ public class LevelEditorWindow : EditorWindow
         }
 
         level.AddObstacle(m_ObstacleTemplate);
+        Undo.RecordObject(level, "Obstacle Created");
+
+        EditorApplication.SaveScene();
     }
 
     private void OnGUI()

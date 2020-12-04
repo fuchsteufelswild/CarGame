@@ -52,7 +52,7 @@ public class MovingObstacle : ObstacleBase
 
     void MoveToTarget(Vector3 targetPosition)
     {
-        m_ObjectTransform.position = Vector3.Lerp(m_ObjectTransform.position, targetPosition, m_ObjectSpeed * Time.deltaTime);
+        m_ObjectTransform.position = Vector3.Lerp(m_ObjectTransform.position, targetPosition, m_ObjectSpeed * Time.fixedDeltaTime);
 
         if (Vector3.Distance(m_ObjectTransform.position, targetPosition) <= m_DistanceSensivity)
             m_MovingToMinPosition = !m_MovingToMinPosition;
@@ -84,6 +84,8 @@ public class MovingObstacleEditor : Editor
 
     float m_IdentifierOffsetMultiplier = 2.0f;
 
+    Tool m_PreviousTool = Tool.None;
+
     private void OnEnable()
     {
         m_Target = target as MovingObstacle;
@@ -93,12 +95,20 @@ public class MovingObstacleEditor : Editor
 
         m_AlignHorizontal = serializedObject.FindProperty("m_AlignHorizontally");
         m_AlignVertical = serializedObject.FindProperty("m_AlignVertically");
+
+        m_PreviousTool = Tools.current;
     }
 
+    private void OnDisable()
+    {
+        Tools.current = m_PreviousTool;
+    }
 
     private void OnSceneGUI()
     {
         serializedObject.Update();
+
+        Tools.current = Tool.None;
 
         Handles.Label(m_MinMovePositionVector.vector3Value + Vector3.up * m_IdentifierOffsetMultiplier, "Min Bound");
         Handles.Label(m_MaxMovePositionVector.vector3Value + Vector3.up * m_IdentifierOffsetMultiplier, "Max Bound");

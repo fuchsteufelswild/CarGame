@@ -10,13 +10,40 @@ public abstract class CarBase : MonoBehaviour
     protected float m_CarRotationSpeed = 30f;
     protected Rigidbody2D m_Rigidbody;
 
+    Transform m_EntrancePoint;
+
+    protected Vector3 StartPoint =>
+        m_EntrancePoint.transform.position;
+    protected Quaternion StartRotation =>
+        m_EntrancePoint.transform.rotation;
+
+    protected void SetEntrancePoint(Transform entrancePoint) =>
+        m_EntrancePoint = entrancePoint;
+
+    // Put car back to its starting position
+    private void ResetToEntrance()
+    {
+        transform.position = m_EntrancePoint.position;
+        transform.rotation = m_EntrancePoint.rotation;
+    }
+
+    public virtual void ResetToInitialAttributes()
+    {
+        ResetToEntrance();
+    }
+
+    public void UpdateParams(Level level)
+    {
+        m_CarSpeed = level.CarSpeed;
+        m_CarRotationSpeed = level.CarRotationSpeed;
+    }
+
     // Find level object and update speeds
     private void UpdateMovementValues()
     {
         Level level = FindObjectOfType<Level>();
 
-        m_CarSpeed = level.CarSpeed;
-        m_CarRotationSpeed = level.CarRotationSpeed;
+        UpdateParams(level);
     }
 
     protected virtual void Start()
@@ -24,7 +51,7 @@ public abstract class CarBase : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody2D>();
         m_Rigidbody.gravityScale = 0;
         GetComponent<Collider2D>().isTrigger = true;
-        // Register to new level loaded event that takes Level object
+        
         EventManager.AddListener(SceneEvents.SCENE_LOAD_FINISHED, UpdateMovementValues);
     }
 
@@ -32,7 +59,9 @@ public abstract class CarBase : MonoBehaviour
 
     protected void Move(float angleChange)
     {
-        transform.Rotate(Vector3.forward * angleChange);
-        transform.position += transform.up * m_CarSpeed * Time.deltaTime;
+        if(!Managers.MissionManager.IsPaused)
+            transform.Rotate(Vector3.forward * angleChange);
+
+        transform.position += transform.up * m_CarSpeed * Time.fixedDeltaTime;
     }
 }

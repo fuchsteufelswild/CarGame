@@ -11,11 +11,9 @@ public abstract class ObstacleBase : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == AgentTags.PLAYER_CAR_TAG ||
-            collision.gameObject.tag == AgentTags.GHOST_CAR_TAG)
+        if (collision.gameObject.tag == AgentTags.PLAYER_CAR_TAG)
         {
-            // Get CarBase
-            // Call Function
+            EventManager.NotifyEvent(MissionEvents.PLAYER_BUMP);
         }
     }
 }

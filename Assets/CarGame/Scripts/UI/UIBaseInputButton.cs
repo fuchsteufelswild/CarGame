@@ -24,7 +24,7 @@ public abstract class UIBaseInputButton : MonoBehaviour
     public void UpdateEventCode(string newEventCode)
     {
         m_InputEventCode = newEventCode;
-        m_ActionEventCode = m_InputEventCode.Remove(m_InputEventCode.Length - 7);
+        m_ActionEventCode = m_InputEventCode.Remove(m_InputEventCode.Length - 7); // Trim _BUTTON out
     }
 }
 

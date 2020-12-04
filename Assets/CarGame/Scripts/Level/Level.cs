@@ -13,14 +13,14 @@ public class Level : MonoBehaviour
 
     [Header("Level Attributes")]
     [SerializeField] [Range(0f, 10f)] float m_CarSpeed = 1f;
-    [SerializeField] [Range(10f, 120f)] float m_CarRotationSpeed = 40f;
+    [SerializeField] [Range(10f, 360f)] float m_CarRotationSpeed = 40f;
 
     [Header("Object Prefabs")]
     [SerializeField] EntranceExitPair m_EntranceExitPairPrefab;
     
-    int m_PairArraySize = 8;
-    int[] m_PairUsageStatus;
-    EntranceExitPair[] m_EntranceExitPairs;
+    [SerializeField] int m_PairArraySize = 8;
+    [SerializeField] int[] m_PairUsageStatus;
+    [SerializeField] EntranceExitPair[] m_EntranceExitPairs;
 
     public float CarSpeed => m_CarSpeed;
     public float CarRotationSpeed => m_CarRotationSpeed;
@@ -92,7 +92,6 @@ public class Level : MonoBehaviour
 
             pair.SetPoints(entrancePoint.transform, exitPoint.transform);
         }
-
     }
 
     public void AddObstacle(ObstacleBase newObstacle)
