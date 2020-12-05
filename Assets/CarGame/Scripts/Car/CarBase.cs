@@ -1,5 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/* Base car attributes and functionality.
+ */ 
+
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D),
@@ -57,11 +58,11 @@ public abstract class CarBase : MonoBehaviour
 
     public abstract void Tick(float delta);
 
-    protected void Move(float angleChange)
+    protected void Move(float angleChange, float delta)
     {
         if(!Managers.MissionManager.IsPaused)
             transform.Rotate(Vector3.forward * angleChange);
 
-        transform.position += transform.up * m_CarSpeed * Time.fixedDeltaTime;
+        transform.position += transform.up * m_CarSpeed * delta;
     }
 }

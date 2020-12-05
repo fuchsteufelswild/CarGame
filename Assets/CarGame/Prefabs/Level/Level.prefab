@@ -161,9 +161,10 @@ MonoBehaviour:
   m_CarRotationSpeed: 220
   m_EntranceExitPairPrefab: {fileID: 5599478294516916632, guid: 85b050f1516b87c409d0c1dab4240107,
     type: 3}
-  m_PairArraySize: 8
-  m_PairUsageStatus: 
-  m_EntranceExitPairs: []
+  m_DefaultStaticObstaclePrefab: {fileID: 6835101588896662533, guid: f5eddd1dc6b00884aabd0faadfa91f7a,
+    type: 3}
+  m_DefaultMovingObstaclePrefab: {fileID: 921747266632488563, guid: 4e99858afa801da40abfecaefe2647a1,
+    type: 3}
 --- !u!1 &1047979811531155975
 GameObject:
   m_ObjectHideFlags: 0
@@ -2625,7 +2626,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6981812988627239390}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.05, y: -5.52, z: 0}
+  m_LocalPosition: {x: -0.1, y: -6.4, z: 0}
   m_LocalScale: {x: 1, y: 17.554218, z: 1}
   m_Children: []
   m_Father: {fileID: 1047979812865440782}
@@ -2746,7 +2747,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6981812988959506848}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.39, y: 0, z: 0}
+  m_LocalPosition: {x: -10.2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 10.125, z: 1}
   m_Children: []
   m_Father: {fileID: 1047979812865440782}
@@ -3006,7 +3007,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6981812990046599775}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.43, y: 0, z: 0}
+  m_LocalPosition: {x: 10.3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 10.125, z: 1}
   m_Children: []
   m_Father: {fileID: 1047979812865440782}
@@ -3127,7 +3128,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6981812990158591481}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.05, y: 5.47, z: 0}
+  m_LocalPosition: {x: -0, y: 6.7, z: 0}
   m_LocalScale: {x: 1, y: 17.554218, z: 1}
   m_Children: []
   m_Father: {fileID: 1047979812865440782}

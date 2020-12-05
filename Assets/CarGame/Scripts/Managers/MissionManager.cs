@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿/* Manager to keep track of current game settings.
+ * Responsible for handling wave start/end functionality,
+ * keeping track of current level related data, and
+ * game state.
+ */ 
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +14,7 @@ public class MissionManager : ManagerBase,
     [SerializeField] float m_WaveTimer = 2.0f;
     [SerializeField] private PlayerCar m_PlayerCar;
 
+    private Vector3 m_DefaultPlayerCarPosition = Vector3.zero;
     private int m_CurrentWaveIndex = 1;
     private Level m_CurrentLevel = null;
     private EntranceExitPair m_CurrentEntranceExitPair;
@@ -21,13 +28,16 @@ public class MissionManager : ManagerBase,
     public float MaxWaveTimer => m_WaveTimer;
     public bool IsPaused => m_Paused;
 
+    /* Freezes the game, feeds successful player record
+     * into new ghost car then starts timer.
+     */ 
     void PrepareForNewWave()
     {
         Time.timeScale = 0;
         m_Paused = true;
 
         GhostCar ghost = Managers.ObjectManager.AvailableGhostCar;
-        ghost.SetData(m_PlayerCar.AngleChangeArray, m_CurrentEntranceExitPair);
+        ghost.SetData(m_PlayerCar.RecordArray, m_CurrentEntranceExitPair);
         ghost.UpdateParams(m_CurrentLevel);
         m_AllCars.Add(ghost);
 
@@ -55,6 +65,7 @@ public class MissionManager : ManagerBase,
 
     void LevelChanged()
     {
+        m_PlayerCar.transform.position = m_DefaultPlayerCarPosition;
         for (int i = 1; i < m_AllCars.Count; ++i)
             m_AllCars[i].gameObject.SetActive(false);
 
@@ -91,7 +102,7 @@ public class MissionManager : ManagerBase,
         ResetCarTransform();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(!m_Paused)
         {
@@ -120,6 +131,13 @@ public class MissionManager : ManagerBase,
         EventManager.AddListener(MissionEvents.PLAYER_BUMP, ResetCarTransform);
         EventManager.AddListener(MissionEvents.GAME_UNPAUSED, () => m_Paused = false);
 
+        if(m_PlayerCar == null)
+        {
+            m_PlayerCar = FindObjectOfType<PlayerCar>();
+            if (m_PlayerCar == null)
+                Debug.LogError("Player Car cannot be found.");
+        }
+        m_DefaultPlayerCarPosition = m_PlayerCar.transform.position;
         m_AllCars.Add(m_PlayerCar);
 
         Debug.Log("Mission Manager Started");

@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿/* Interface for managers that requires Initialization step
+ * and may require saving/restoring in case of save/load action.
+ */ 
+using System.Collections;
 
 public enum ManagerStatus
 {

@@ -75,7 +75,6 @@ public class EntranceExitPairEditor : Editor
 
         if(EditorGUI.EndChangeCheck())
         {
-            Debug.Log("Change");
             Undo.RegisterCompleteObjectUndo(transform, "Transform Moved");
             transform.position = pos;
             transform.rotation = Quaternion.Euler(0, 0, rot.eulerAngles.z);

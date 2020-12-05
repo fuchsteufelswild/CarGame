@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿/* Responsible for keeping track of object initialization
+ * and object pools.
+ */ 
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;

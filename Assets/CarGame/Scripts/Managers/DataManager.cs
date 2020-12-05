@@ -51,7 +51,7 @@ public class DataManager : ManagerBase,
         m_FilePath = Path.Combine(Application.persistentDataPath, "GameData.dat");
         // m_FilePath = Path.Combine(Application.dataPath, "GameData.dat");
 
-        Debug.Log("File Path " + m_FilePath);
+        // Debug.Log("File Path " + m_FilePath);
 
         LoadGameData();
 
@@ -74,6 +74,7 @@ public class DataManager : ManagerBase,
 
         var currentState = new Dictionary<string, object>();
 
+        // Get data from all managers
         currentState.Add("MissionState", ((IGameManager)Managers.MissionManager).GetData());
 
         FileStream file = File.Open(m_FilePath, FileMode.OpenOrCreate);
@@ -102,8 +103,9 @@ public class DataManager : ManagerBase,
         gameState = formatter.Deserialize(file) as Dictionary<string, object>;
         file.Close();
         
+        // Feed data into all managers
         ((IGameManager)Managers.MissionManager).UpdateData(gameState["MissionState"]);
 
-        // EventMessenger.NotifyEvent(SaveEvents.LOADING_SAVE_COMPLETED);
+        EventManager.NotifyEvent(SaveEvents.LOADING_SAVE_COMPLETED);
     }
 }

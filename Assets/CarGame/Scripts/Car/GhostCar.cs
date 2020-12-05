@@ -1,25 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/* Represents previous plays of the player
+ * uses play record array to move
+ */
+
 using UnityEngine;
 
 public class GhostCar : CarBase
 {
     int m_CurrentFrameIndex = 0;
-    float[] m_AngleChanges;
-    
-    public void SetData(float[] angleChangeArray, EntranceExitPair pair)
+
+    (float angleChange, float delta)[] m_PlayRecord;
+
+    public void SetData((float, float)[] angleChangeArray, EntranceExitPair pair)
     {
         SetEntrancePoint(pair.EntrancePoint);
-        m_AngleChanges = angleChangeArray;
+        m_PlayRecord = angleChangeArray;
         m_CurrentFrameIndex = 0;
     }
 
     public override void Tick(float delta)
     {
-        if (m_CurrentFrameIndex >= m_AngleChanges.Length) return;
+        if (m_CurrentFrameIndex >= m_PlayRecord.Length) return;
 
-        float angleChange = m_AngleChanges[m_CurrentFrameIndex++];
-        Move(angleChange);
+        delta = m_PlayRecord[m_CurrentFrameIndex].delta;
+        float angleChange = m_PlayRecord[m_CurrentFrameIndex++].angleChange;
+        Move(angleChange, delta);
     }
 
     public override void ResetToInitialAttributes()

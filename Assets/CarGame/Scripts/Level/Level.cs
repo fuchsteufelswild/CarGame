@@ -17,15 +17,19 @@ public class Level : MonoBehaviour
 
     [Header("Object Prefabs")]
     [SerializeField] EntranceExitPair m_EntranceExitPairPrefab;
+    [SerializeField] ObstacleBase m_DefaultStaticObstaclePrefab;
+    [SerializeField] ObstacleBase m_DefaultMovingObstaclePrefab;
     
-    [SerializeField] int m_PairArraySize = 8;
-    [SerializeField] int[] m_PairUsageStatus;
-    [SerializeField] EntranceExitPair[] m_EntranceExitPairs;
+    int m_PairArraySize = 8;
+    int[] m_PairUsageStatus;
+    EntranceExitPair[] m_EntranceExitPairs;
 
     public float CarSpeed => m_CarSpeed;
     public float CarRotationSpeed => m_CarRotationSpeed;
 
-
+    /* Picks a random entrance/exit pair.
+     * A pair is chosen only once.
+     */ 
     public EntranceExitPair NextRandomEntraceExitPair
     {
         get
@@ -89,6 +93,7 @@ public class Level : MonoBehaviour
             GameObject exitPoint = new GameObject("Exit");
             exitPoint.transform.SetParent(pair.transform);
             exitPoint.AddComponent<SpriteRenderer>();
+            exitPoint.AddComponent<BoxCollider2D>();
 
             pair.SetPoints(entrancePoint.transform, exitPoint.transform);
         }
@@ -96,6 +101,18 @@ public class Level : MonoBehaviour
 
     public void AddObstacle(ObstacleBase newObstacle)
     {
+        if (newObstacle == null)
+        {
+            Debug.LogError("Please feed default obstacle for spawning action");
+            return;
+        }
+
         GameObject go = Instantiate(newObstacle, m_ObstacleContainer).gameObject;
     }
+
+    public void AddStaticObstacle() =>
+        AddObstacle(m_DefaultStaticObstaclePrefab);
+
+    public void AddMovingObstacle() =>
+        AddObstacle(m_DefaultMovingObstaclePrefab);
 }

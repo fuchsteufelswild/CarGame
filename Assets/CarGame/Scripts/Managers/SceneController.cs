@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/* When a wave finishes, checks the current scene index bounds.
+ * Depending on the result unloads current scene and loads
+ * the next one.
+ */ 
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
